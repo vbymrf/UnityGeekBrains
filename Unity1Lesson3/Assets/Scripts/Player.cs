@@ -13,10 +13,13 @@ public class Player : MonoBehaviour
     int speed=4;
     public float AxisX;
     public int live=10;
-    public static bool  right { get; set;}
+    public static bool right { get; set; } = true;
     public GameObject prefBullet;
+    GameObject temp;
 
-    
+    Vector3 nowPositionR;
+    Vector3 nowPositionL;
+
     void Start()
     {
         Stay = transform.GetChild(0).gameObject;
@@ -25,6 +28,9 @@ public class Player : MonoBehaviour
         smeshen = new Vector3(0, 0, 0);
         scaleRight = new Vector3(1, 1, 1);
         scaleLeft= new Vector3(-1, 1, 1);
+// Задаем вектора для появления пули
+        nowPositionR = new Vector3(0.6f, 0, 0);
+        nowPositionL = new Vector3(-0.6f, 0, 0);
     }
     private void Move()
     {
@@ -64,9 +70,18 @@ public class Player : MonoBehaviour
             Run.SetActive(false);
         }
 
-        if(Input.GetKeyDown(KeyCode.Mouse0)) 
-        {
-            Instantiate(prefBullet,transform.position, Quaternion.identity);
+        if(Input.GetKeyDown(KeyCode.Mouse0)  || Input.GetKeyDown(KeyCode.LeftControl)) 
+        { 
+            
+            if(right)
+            temp = Instantiate(prefBullet,transform.position+ nowPositionR, Quaternion.identity);
+            else
+                temp = Instantiate(prefBullet, transform.position + nowPositionL, Quaternion.identity);
+            //Time.timeScale = 0;
+            //Time.fixedDeltaTime;
+             
+
+            Destroy(temp, 5);
         }
 
         if (transform.position.y < -10 || live <= 0) SceneManager.LoadScene(0);

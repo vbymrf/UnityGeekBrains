@@ -6,10 +6,10 @@ public class Bullet : MonoBehaviour
 {
     public int damage = 2;
     public int speed=4;
-    public Vector3 smeshen;
-    Vector3 nowPositionR;
-    Vector3 nowPositionL;
     
+    bool right;
+    
+     public Vector3 position;
     public GameObject player;
 
    
@@ -17,28 +17,34 @@ public class Bullet : MonoBehaviour
     {
        // player = GameObject.Find("Player");
         
-        nowPositionR = new Vector3(0.592f, -0.028f, 0);
-        nowPositionL = new Vector3(-0.592f, -0.028f, 0);
-        smeshen = new Vector3(1, 0.5f, 0);
+        right = Player.right;
+        
+       
         
     }
 
     void Move()
     {
-//transform.position = player.transform.position+nowPositionR;
-        //if (Player.right)
-        //{
-            
-        //} else
-        //{
-        //    transform.position = player.transform.position + nowPositionL;
-        //}
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + smeshen, speed * Time.deltaTime);
+
+        if (right)
+        {
+ position = transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(1f,0.5f), speed * Time.deltaTime);
+        }
+        else
+        {
+            position = transform.position = Vector3.MoveTowards(transform.position, transform.position - new Vector3(1f, -0.5f), speed * Time.deltaTime);
+        }
+       
     }
 
     void Update()
     {
         Move();
         
+
+    }
+    private void FixedUpdate()
+    {
+        //Destroy(gameObject, 2);
     }
 }

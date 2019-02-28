@@ -61,6 +61,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Bullet.cs" />
+    <Compile Include="Assets\Scripts\Eni.cs" />
+    <Compile Include="Assets\Scripts\Enime.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
     <None Include="Assets\Berem\Free Platform Game Assets\Readme.txt" />
     <Reference Include="Unity.TextMeshPro.Editor">
