@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,21 +11,33 @@ public class Player : MonoBehaviour
     //public bool lerp = false;
     Rigidbody2D _rigibody;
     Transform polTransform;
-     public Collider2D[] polCollider;
+    //public Collider2D[] polCollider;
+    public RaycastHit2D[] racasti;
     bool ground=false;
-   
+    public float radiusPola=0.51f;
+    public Coroutine _coroutina;
+    Color exitCoroutina;
+    Material _colorChange1;
+    Material _colorChange2;
+    public Color _color;
+    Color _colorWhite;
+    public float timeColor=0.1f;
+    public WaitForSeconds waitColor = new WaitForSeconds(0.01f);
       
     public int speed=4;  //скорость перемещения
     public int speedRun = 10;
     //public int vectorRun = 5;
-    public int live=10;// Жизнь песонажа
+    public int live=10;// Жизнь персонажа
     public float AxisX;
     Vector3 smeshen;  
     Vector3 scaleRight;
     Vector3 scaleLeft;    
     Vector3 run;
+    Vector2 collisionEnimeRight;
+    Vector2 collisionEnimeLeft;
+
     #region Пуля
-    
+
     public static bool right { get; set; } = true; // Положение снаряда
     public GameObject prefBullet; //Связь с обьектом пули
     Vector3 nowPositionR;
@@ -42,13 +55,52 @@ public class Player : MonoBehaviour
         scaleRight = new Vector3(1, 1, 1);
         scaleLeft= new Vector3(-1, 1, 1);
         run = new Vector3(0, 1, 0);
-       
+        collisionEnimeRight=new Vector2(3,3);
+        collisionEnimeLeft = new Vector2(-3, 3);
+
 
         polTransform = transform.GetChild(3);
 // Задаем вектора для появления пули
         nowPositionR = new Vector3(0.6f, 0, 0);
         nowPositionL = new Vector3(-0.6f, 0, 0);
         _rigibody = GetComponent<Rigidbody2D>();
+
+        // Корутина
+        timeColor = 0.1f;// Скорость изменения цвета
+        _colorChange1 = transform.GetChild(0).GetComponent<SpriteRenderer>().material;
+        _colorChange2 = transform.GetChild(1).GetComponent<SpriteRenderer>().material;
+        //_colorChange.
+        _colorWhite = _colorChange1.color; 
+       //_coroutina=StartCoroutine(ChangeColor(_color));
+    }
+
+    
+
+    IEnumerator ChangeColor(Color color)
+    {
+        
+        
+        while (_colorChange1.color != color)
+        {
+            _colorChange1.color = Color.Lerp(_colorChange1.color, color, timeColor);
+            _colorChange2.color = Color.Lerp(_colorChange2.color, color, timeColor);
+            //if (exitCoroutina) {
+            //    yield break;
+            //}
+            yield return waitColor;
+        }
+        
+        while (_colorChange1.color != _colorWhite)
+        {
+            _colorChange1.color = Color.Lerp(_colorChange1.color, _colorWhite, timeColor);
+            _colorChange2.color = Color.Lerp(_colorChange2.color, _colorWhite, timeColor);
+            //if (exitCoroutina)
+            //{
+            //    yield break;
+            //}
+            yield return waitColor;
+        }
+        
     }
     private void Move() // Перемещение персонажа
     {
@@ -87,10 +139,18 @@ public class Player : MonoBehaviour
         if(ground)
         _rigibody.AddForce(run*speedRun,ForceMode2D.Impulse);
     }
+//
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        if (collision.gameObject.tag == "Enimes")
+        {
+            if (transform.position.x > collision.transform.position.x) GetComponent<Rigidbody2D>().AddForce(collisionEnimeRight, ForceMode2D.Impulse);
+            else GetComponent<Rigidbody2D>().AddForce(collisionEnimeLeft, ForceMode2D.Impulse);
+            live--;
+            if(_coroutina!=null) StopCoroutine(_coroutina);            
+            _coroutina = StartCoroutine(ChangeColor(_color));
+        } 
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -129,8 +189,14 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        polCollider = Physics2D.OverlapCircleAll(polTransform.position,1);
-        if (polCollider.Length > 1) ground = true;
+        //polCollider = Physics2D.OverlapCircleAll(polTransform.position,radiusPola);
+
+        //if (polCollider.Length > 1) ground = true;
+        //else ground = false;
+         racasti = Physics2D.LinecastAll(transform.position, transform.position + (new Vector3(0, -radiusPola, 0)));
+        //Debug.Log(racasti[1]);
+
+        if (racasti.Length > 1) ground = true;
         else ground = false;
     }
 }

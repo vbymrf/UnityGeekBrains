@@ -5,21 +5,28 @@ using UnityEngine;
 public class Eni : MonoBehaviour
 {
     public List<Enime> Enimes;
-    public Enime prefabEnime;
+    public int random;
+   
+    //public Enime prefabEnime;
     void Start()
     {
        
         
     }
-
+    void InstantiateEnime()
+    {
+            transform.position = new Vector3(Random.Range(-8, 7),5 , 0);
+            random = Random.Range(0, 2);            
+            Instantiate(Enimes[random], transform.position, Quaternion.identity);
+    }
     
     void Update()
     {
-        print(GameObject.FindWithTag("Enimes"));
+        
         if (GameObject.FindWithTag("Enimes") == null)
         {
-            transform.position = new Vector3(Random.Range(-8, 7),5 , 0);
-            Instantiate(prefabEnime, transform.position, Quaternion.identity);
+            InstantiateEnime();
+            Invoke("InstantiateEnime", 5);
         }
     }
 }

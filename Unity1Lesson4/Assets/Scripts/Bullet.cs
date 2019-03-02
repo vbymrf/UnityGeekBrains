@@ -10,6 +10,8 @@ public class Bullet : MonoBehaviour
     bool right;
     
      public Vector3 position;
+    public Vector3 collisionRight;
+    public Vector3 collisionLeft;
     public GameObject player;
 
    
@@ -18,9 +20,10 @@ public class Bullet : MonoBehaviour
        // player = GameObject.Find("Player");
         
         right = Player.right;
-        
-       
-        
+        collisionRight = new Vector3(1f, 0, 0);
+        collisionLeft = new Vector3(-1f, 0, 0);
+
+
     }
 
     void Move()
@@ -50,6 +53,8 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.tag == "Enimes") {
             GameObject temp = collision.gameObject;
             temp.GetComponent<Enime>().live-=1;
+            if (right) temp.GetComponent<Rigidbody2D>().AddForce(collisionRight, ForceMode2D.Impulse);
+            else temp.GetComponent<Rigidbody2D>().AddForce(collisionLeft, ForceMode2D.Impulse);
             Destroy(gameObject);
                 } 
     }

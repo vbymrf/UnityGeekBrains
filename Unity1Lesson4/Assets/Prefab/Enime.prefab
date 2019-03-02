@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4906028771796337815}
+  - component: {fileID: 2211464670822927523}
   - component: {fileID: 7472204640065321786}
   - component: {fileID: 3880725474990690706}
   - component: {fileID: 6644164340551034708}
-  - component: {fileID: 2211464670822927523}
   m_Layer: 0
   m_Name: Enime
   m_TagString: Enimes
@@ -34,6 +34,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2211464670822927523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056692696447611569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 444d38f0f274fc44cbe29a05956e8db6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  live: 10
 --- !u!212 &7472204640065321786
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -129,16 +142,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &2211464670822927523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056692696447611569}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 444d38f0f274fc44cbe29a05956e8db6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  live: 10
