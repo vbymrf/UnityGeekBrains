@@ -124,7 +124,7 @@ public class Player : MonoBehaviour
         if (right)
         {
             temp = Instantiate(prefBullet, transform.position + nowPositionR, Quaternion.identity);
-            print("Выстрел правый");
+            //print("Выстрел правый");
         }
         else
             temp = Instantiate(prefBullet, transform.position + nowPositionL, Quaternion.identity);

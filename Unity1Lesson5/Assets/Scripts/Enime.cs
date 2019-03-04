@@ -11,6 +11,7 @@ public class Enime : MonoBehaviour
     int impulse ;
     public bool Patrol;
     public bool Visible;
+    public bool atack;
     public int speed;// скорость движения
     public bool right=false;// идем на право
     public List<RaycastHit2D> seeObject;
@@ -18,6 +19,11 @@ public class Enime : MonoBehaviour
     public LayerMask seeMask;
     public RaycastHit2D[] vidim;
     GameObject Player;
+    public GameObject prefabBullet;
+    public float timeWaitBullet=2f;
+
+    bool zadergkaTime=true;
+    WaitForSeconds waitBullet;
 
 
     Vector3 step;
@@ -34,6 +40,8 @@ public class Enime : MonoBehaviour
         impulse = 0;
         seeUgl = new Vector3(0, -1, 0);
         nol = new Vector3(0, 0, 0);
+
+        waitBullet = new WaitForSeconds(timeWaitBullet);
 
         Player = GameObject.FindGameObjectWithTag("Player");
 
@@ -89,20 +97,55 @@ public class Enime : MonoBehaviour
                 {
                     seeUgl.y = 0;
                     distanceSee = 3;
-                    if(Player.transform.position.x<transform.position.x)
+                    if (Player.transform.position.y <= transform.position.y+0.5)
                     {
-                        step.x = -1;
-                        Move();
-                    }
-                    else
+                        if (Player.transform.position.x < transform.position.x)
+                        {
+                            step.x = -1;
+                            Move();
+                        }
+                        else
+                        {
+                            step.x = 1;
+                            Move();
+                        }
+                        foreach (RaycastHit2D vid in vidim)
+                        {
+                            if (vid.transform.tag == "Player") atack = true;
+                        }
+                        
+                        if (atack && zadergkaTime)
+                        {
+                            Bullet();
+                            StartCoroutine(zadergka());
+                        }
+                    } else
                     {
-                        step.x = 1;
-                        Move();
+                        Patrol = true;
                     }
-
                 }
             }
         }
+    }
+    IEnumerator zadergka()
+    {
+        zadergkaTime = false;
+        yield return waitBullet;
+        zadergkaTime = true;
+    }
+
+        void Bullet()
+    {       
+            GameObject temp;
+            if (Player.transform.position.x > transform.position.x)
+            {
+                 temp= Instantiate(prefabBullet, transform.position + new Vector3(0.7f, 0.8f, 0), Quaternion.identity);
+            }
+            else
+            {
+                temp = Instantiate(prefabBullet, transform.position + new Vector3(-0.7f, 0.8f, 0), Quaternion.identity);
+            }
+            Destroy(temp,5);         
     }
    void  Move()
     {

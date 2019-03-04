@@ -52,12 +52,16 @@ MonoBehaviour:
   silaVrasheniy: 10
   Patrol: 1
   Visible: 0
+  atack: 0
   speed: 2
   right: 0
   distanceSee: 1
   seeMask:
     serializedVersion: 2
     m_Bits: 1
+  prefabBullet: {fileID: 3856096126575275917, guid: 9d2e2c23471a1cf4e82ae36a1a0b6473,
+    type: 3}
+  timeWaitBullet: 2
 --- !u!212 &7472204640065321786
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -131,7 +131,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14027e8abe57a0649860180e80edead6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 1
   speed: 6
   position: {x: 0, y: 0, z: 0}
-  player: {fileID: 0}
+  collisionRight: {x: 0, y: 0, z: 0}
+  collisionLeft: {x: 0, y: 0, z: 0}
+  collisionV: {x: 0, y: 0, z: 0}
+  player: 1

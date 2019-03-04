@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public int damage = 2;
+    public int damage = 1;
     public int speed=4;
     
     bool right;
@@ -12,17 +12,34 @@ public class Bullet : MonoBehaviour
      public Vector3 position;
     public Vector3 collisionRight;
     public Vector3 collisionLeft;
-    public GameObject player;
+    public Vector3 collisionV;
+    public bool player;
+    Transform playerTransform;
 
-   
+
     void Start()
     {
-       // player = GameObject.Find("Player");
         
-        right = Player.right;
-        collisionRight = new Vector3(1f, 0, 0);
-        collisionLeft = new Vector3(-1f, 0, 0);
-
+        if (player)
+        {
+            right = Player.right;
+            collisionRight = new Vector3(1f, 0, 0);
+            collisionLeft = new Vector3(-1f, 0, 0);
+        }
+        else
+        {
+            playerTransform = GameObject.Find("Player").transform;
+            if (transform.position.x < playerTransform.position.x)
+            {
+                collisionV = new Vector3(3f, 1f, 0);
+                right = true;
+                
+            } else
+            {
+                collisionV = new Vector3(-3f, 1f, 0);
+                right = false;
+            }
+        }
 
     }
 
@@ -48,20 +65,34 @@ public class Bullet : MonoBehaviour
 
     }
     
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)// Отскок от пули и ее уничтожение
     {
-        if (collision.gameObject.tag == "Enimes") {
-            GameObject temp = collision.gameObject;
-            temp.GetComponent<Enime>().live-=1;
-            if (right) temp.GetComponent<Rigidbody2D>().AddForce(collisionRight, ForceMode2D.Impulse);
-            else temp.GetComponent<Rigidbody2D>().AddForce(collisionLeft, ForceMode2D.Impulse);
-            Destroy(gameObject);
-                } 
+        if (player)
+        {
+            if (collision.gameObject.tag == "Enimes" )
+            {
+                GameObject temp = collision.gameObject;
+                temp.GetComponent<Enime>().live -= damage;
+                if (right) temp.GetComponent<Rigidbody2D>().AddForce(collisionRight, ForceMode2D.Impulse);
+                else temp.GetComponent<Rigidbody2D>().AddForce(collisionLeft, ForceMode2D.Impulse);
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            if (collision.gameObject.tag == "Player")
+            {
+                GameObject temp = collision.gameObject;
+                temp.GetComponent<Player>().live -= damage;
+                temp.GetComponent<Rigidbody2D>().AddForce(collisionV, ForceMode2D.Impulse);                
+                Destroy(gameObject);
+            }
+        }
     }
     
     private void FixedUpdate()
     {
-        
-        Destroy(GetComponent<Bullet>(), 2);
+        //Самоуничтожиться
+       // Destroy(GetComponent<Bullet>(), 2);
     }
 }
