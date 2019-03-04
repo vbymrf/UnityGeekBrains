@@ -121,7 +121,7 @@ public class Enime : MonoBehaviour
                         }
                     } else
                     {
-                        Patrol = true;
+                       Patrol = true;
                     }
                 }
             }
@@ -170,11 +170,11 @@ public class Enime : MonoBehaviour
     {
         if (transform.position.y < -10 || live <= 0) Destroy(gameObject);
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        
-    }
- 
+       if (collision.transform.tag == "Enimes") Flip(); 
+    }        
+    
     private void OnTriggerStay2D(Collider2D collider)
     {
         Debug.Log("Внутри находится:"+collider.name);
