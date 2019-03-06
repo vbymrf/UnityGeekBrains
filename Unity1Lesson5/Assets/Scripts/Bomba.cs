@@ -9,7 +9,7 @@ public class Bomba : MonoBehaviour
     Vector3 scaleFlipL;
     Vector3 polet;
     public float TimeBoom = 3;
-    public float _force = 1;
+    public float _force = 6;
     WaitForSeconds timeBoom;
     WaitForSeconds waitFlip = new WaitForSeconds(0.3f);
     List<GameObject> objectAddForce;
@@ -17,6 +17,7 @@ public class Bomba : MonoBehaviour
     void Start()
     {
         timeBoom = new WaitForSeconds(TimeBoom);
+        objectAddForce = new List<GameObject>();
         scaleFlipR = new Vector3(1, 1, 1);
         scaleFlipL = new Vector3(-1, 1, 1);
         StartCoroutine(Flip());//Вращение бомбы
@@ -37,17 +38,36 @@ public class Bomba : MonoBehaviour
 
         foreach(GameObject o in objectAddForce)
         {
-            float x= o.transform.position.x-transform.position.x;
-            float y= o.transform.position.y - transform.position.y;
+            if (o != null)
+            {
+                float x =  o.transform.position.x-transform.position.x;
+                float y =  o.transform.position.y-transform.position.y;
+                float sila = (5 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2)))/5;
+                //Debug.Log(sila);
+                //print("x=" + x + " , y=" + y + "  live=" + (int)Mathf.Round(5 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2))));
+                if (o.tag == "Player") o.GetComponent<Player>().live -= (int)Mathf.Round(5 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2)));
+                else if (o.tag == "Enimes") o.GetComponent<Enime>().live -= (int)Mathf.Round(5 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2)));
 
-            if (o.tag=="Player") o.GetComponent<Player>().live -= (int)Mathf.Round(4 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2)));
-            else if((o.tag == "Enimes")) o.GetComponent<Enime>().live-= (int)Mathf.Round( 4-Mathf.Sqrt( Mathf.Pow(x,2)+Mathf.Pow(y,2) ) );
-
-            if (x < 0.5) x = 0.5f;
-            if (y < 0.5) y = 0.5f;
-            polet = new Vector3(_force / x, _force / y, 0);
-            o.GetComponent<Rigidbody2D>().AddForce(polet, ForceMode2D.Impulse);
-            
+                
+                float modX = 1, modY=1;
+                if (x < 0)
+                {
+                    modX = -1;
+                    x *= -1;
+                }
+                if (y < 0)
+                {
+                    modY = -1;
+                    y *= -1;
+                }
+                x = modX*_force * sila *(x / (x + y));
+                y = modY*_force * sila* (y / (x + y));
+                polet = new Vector3(x, y, 0);
+                
+                //print("o=" + o.transform.position.x + " bomba=" + transform.position.x);
+                //print("Вектор отлета "+polet);
+                o.GetComponent<Rigidbody2D>().AddForce(polet, ForceMode2D.Impulse);
+            }
         }
         Destroy(gameObject);
 
@@ -56,15 +76,18 @@ public class Bomba : MonoBehaviour
     {
         if( collision.tag=="Enimes" || collision.tag == "Player")
         {
-            Debug.Log("Вошел в тригер" + collision.gameObject);
-            objectAddForce.Add(collision.gameObject);
+            if (!objectAddForce.Contains(collision.gameObject))
+                {
+                //Debug.Log("Вошел в тригер " + collision.gameObject);
+                objectAddForce.Add(collision.gameObject);
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Enimes" || collision.tag == "Player")
         {
-            Debug.Log("Вышел из тригер" + collision.name);
+           // Debug.Log("Вышел из тригера " + collision.name);
             objectAddForce.Remove(collision.gameObject);
         }
 
