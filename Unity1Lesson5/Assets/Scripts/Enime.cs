@@ -23,7 +23,7 @@ public class Enime : MonoBehaviour
     public float timeWaitBullet=2f;
 
     bool zadergkaTime=true;
-    WaitForSeconds waitBullet;
+    WaitForSeconds waitBullet;//время между выстрелами
 
 
     Vector3 step;
@@ -177,13 +177,13 @@ public class Enime : MonoBehaviour
     
     private void OnTriggerStay2D(Collider2D collider)
     {
-        Debug.Log("Внутри находится:"+collider.name);
+        //Debug.Log("Внутри находится:"+collider.name);
         if(collider.gameObject.tag=="Player")
         Patrol = false;
     }
     private void OnTriggerExit2D(Collider2D collider)
     {
-        Debug.Log("Вышел:" + collider.gameObject.name);
+        //Debug.Log("Вышел:" + collider.gameObject.name);
         if (collider.gameObject.tag == "Player")
             Patrol = true;
     }

@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     Vector3 nowPositionL;
     GameObject temp;
     #endregion
-    
+    public GameObject prefabBomba;
 
     void Start()
     {
@@ -105,16 +105,18 @@ public class Player : MonoBehaviour
     private void Move() // Перемещение персонажа
     {
 
-        smeshen.x = AxisX;
+        //smeshen.x = AxisX;
         if (AxisX > 0)
         {
             transform.localScale = scaleRight;
             right = true;
+            smeshen.x = 1;
         }
         else
         {
             transform.localScale = scaleLeft;
             right = false;
+            smeshen.x = -1;
         }
         //transform.position= Vector3.Lerp(transform.position, transform.position+smeshen, speed*Time.deltaTime);
         transform.position = Vector3.MoveTowards(transform.position, transform.position + smeshen, speed * Time.deltaTime);
@@ -176,14 +178,17 @@ public class Player : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse0)  || Input.GetKeyDown(KeyCode.LeftControl)) 
         {
             Bul();
-            print("Выстрел");
+            //print("Выстрел");
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             RunPlayer();
         } 
-       
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            Instantiate(prefabBomba, transform.position, Quaternion.identity);
+        }
 
         if (transform.position.y < -10 || live <= 0) SceneManager.LoadScene(0);
     }
