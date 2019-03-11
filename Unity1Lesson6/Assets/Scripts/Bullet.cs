@@ -76,6 +76,9 @@ public class Bullet : MonoBehaviour
                 if (right) temp.GetComponent<Rigidbody2D>().AddForce(collisionRight, ForceMode2D.Impulse);
                 else temp.GetComponent<Rigidbody2D>().AddForce(collisionLeft, ForceMode2D.Impulse);
                 Destroy(gameObject);
+                if(!collision.gameObject.GetComponent<Enime>()._aS.isPlaying)
+                 collision.gameObject.GetComponent<Enime>()._aS.Play();
+
             }
         }
         else
@@ -86,6 +89,10 @@ public class Bullet : MonoBehaviour
                 temp.GetComponent<Player>().live -= damage;
                 temp.GetComponent<Rigidbody2D>().AddForce(collisionV, ForceMode2D.Impulse);                
                 Destroy(gameObject);
+                AudioSource a = playerTransform.GetComponent<Player>()._aS;
+                a.clip=playerTransform.GetComponent<Player>()._amClip[1];
+                a.Play();
+               
             }
         }
     }

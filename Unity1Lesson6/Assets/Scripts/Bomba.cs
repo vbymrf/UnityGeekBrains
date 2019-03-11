@@ -45,8 +45,19 @@ public class Bomba : MonoBehaviour
                 float sila = (5 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2)))/5;
                 //Debug.Log(sila);
                 //print("x=" + x + " , y=" + y + "  live=" + (int)Mathf.Round(5 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2))));
-                if (o.tag == "Player") o.GetComponent<Player>().live -= (int)Mathf.Round(5 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2)));
-                else if (o.tag == "Enimes") o.GetComponent<Enime>().live -= (int)Mathf.Round(5 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2)));
+                if (o.tag == "Player")
+                {
+                    o.GetComponent<Player>().live -= (int)Mathf.Round(5 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2)));
+                    AudioSource a = o.GetComponent<Player>()._aS;
+                    a.clip = o.GetComponent<Player>()._amClip[0];
+                    a.Play();
+                }
+                else if (o.tag == "Enimes")
+                {
+                    o.GetComponent<Enime>().live -= (int)Mathf.Round(5 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2)));
+                    if(!o.GetComponent<Enime>()._aS.isPlaying)
+                    o.GetComponent<Enime>()._aS.Play();
+                }
 
                 
                 float modX = 1, modY=1;

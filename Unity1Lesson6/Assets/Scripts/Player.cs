@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     Vector3 run;
     Vector2 collisionEnimeRight;
     Vector2 collisionEnimeLeft;
+    Vector2 velA;
 
     Rigidbody2D _cRigi;
     //Vector3 _vRelativeVelosity;
@@ -43,6 +44,9 @@ public class Player : MonoBehaviour
     float Yv=0;
     Animator _cAnimator;
     float Ypred;
+
+    public AudioSource _aS;
+    public AudioClip[] _amClip;
 
     #region Пуля
 
@@ -55,21 +59,23 @@ public class Player : MonoBehaviour
     public GameObject prefabBomba;
     private void OnGUI()
     {
+        _aS = GetComponent<AudioSource>();
         Vector3 vect = Camera.main.WorldToScreenPoint(transform.position);
         Rect liveRect = new Rect(vect.x + 10, Screen.height - vect.y - 30, 20, 20);
         GUI.Box(liveRect, live.ToString());
         #region Отладка
         GUILayout.Label("Velocity X="+Xv.ToString()+" Y="+ Yv.ToString());
-        GUILayout.Toggle(ground,"ground");
-        
+        GUILayout.Toggle(ground,"ground");    
         #endregion
     }
+    
     private void OnCollisionStay(Collision collision)
     {
        // _vRelativeVelosity=collision.relativeVelocity;
     }
     void Start()
     {
+        
         _cAnimator = GetComponent<Animator>();
         _cRigi =  GetComponent<Rigidbody2D>();
         Stay = transform.GetChild(0).gameObject;
@@ -82,6 +88,7 @@ public class Player : MonoBehaviour
         collisionEnimeRight=new Vector2(3,3);
         collisionEnimeLeft = new Vector2(-3, 3);
 
+        
 
         polTransform = transform.GetChild(2);
 // Задаем вектора для появления пули
@@ -91,11 +98,10 @@ public class Player : MonoBehaviour
 
         // Корутина
         timeColor = 0.1f;// Скорость изменения цвета
-        _colorChange1 = transform.GetChild(0).GetComponent<SpriteRenderer>().material;
-        _colorChange2 = transform.GetChild(1).GetComponent<SpriteRenderer>().material;
-        //_colorChange.
+        _colorChange1 = GetComponent<SpriteRenderer>().material;
+        
         _colorWhite = _colorChange1.color; 
-       //_coroutina=StartCoroutine(ChangeColor(_color));
+ 
     }
 
     
@@ -107,7 +113,7 @@ public class Player : MonoBehaviour
         while (_colorChange1.color != color)
         {
             _colorChange1.color = Color.Lerp(_colorChange1.color, color, timeColor);
-            _colorChange2.color = Color.Lerp(_colorChange2.color, color, timeColor);
+           
             //if (exitCoroutina) {
             //    yield break;
             //}
@@ -117,7 +123,7 @@ public class Player : MonoBehaviour
         while (_colorChange1.color != _colorWhite)
         {
             _colorChange1.color = Color.Lerp(_colorChange1.color, _colorWhite, timeColor);
-            _colorChange2.color = Color.Lerp(_colorChange2.color, _colorWhite, timeColor);
+          
             //if (exitCoroutina)
             //{
             //    yield break;
@@ -176,6 +182,12 @@ public class Player : MonoBehaviour
             live--;
             if(_coroutina!=null) StopCoroutine(_coroutina);            
             _coroutina = StartCoroutine(ChangeColor(_color));
+ _aS.clip = _amClip[0];
+                _aS.Play();
+            if (!_aS.isPlaying)
+            {
+               
+            }
         } 
     }
     private void OnCollisionStay2D(Collision2D collision)
@@ -227,6 +239,7 @@ public class Player : MonoBehaviour
         if (Yv > 0.3)//Если прыгаем
         {
             _cAnimator.SetBool("jumpUp", true);
+            _cAnimator.SetBool("Idle", false);
         } else if (Yv < 0 && Ypred>transform.position.y)//Если падаем
         {
             _cAnimator.SetBool("jumpDown", true);
@@ -234,6 +247,10 @@ public class Player : MonoBehaviour
             _cAnimator.SetBool("jumpUp", false);
 
         }
+        //if(Ypred == transform.position.y)
+        //{
+        //    print("сошлись");
+        //}
     }
     private void FixedUpdate()
     {

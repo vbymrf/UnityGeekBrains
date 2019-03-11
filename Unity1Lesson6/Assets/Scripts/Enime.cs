@@ -22,6 +22,8 @@ public class Enime : MonoBehaviour
     public GameObject prefabBullet;
     public float timeWaitBullet=2f;
 
+    public AudioSource _aS;
+
     bool zadergkaTime=true;
     WaitForSeconds waitBullet;//время между выстрелами
 
@@ -36,6 +38,7 @@ public class Enime : MonoBehaviour
 
     void Start()
     {
+        _aS = GetComponent<AudioSource>();
       _rigibody = GetComponent<Rigidbody2D>();
         impulse = 0;
         seeUgl = new Vector3(0, -1, 0);
