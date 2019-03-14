@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
    // public static GameObject thisGameObject;
+    
     
     GameObject Stay;
     //public bool lerp = false;
@@ -28,7 +30,11 @@ public class Player : MonoBehaviour
     public int speed=4;  //скорость перемещения
     public int speedRun = 10;
     //public int vectorRun = 5;
-    public int live=10;// Жизнь персонажа
+    public int live=10;// Здоровье персонажа
+    public int livs = 3;// Жизнь персонажа
+    RaycastHit2D[] _rLiveNewPosit;
+
+
     public float AxisX;
     Vector3 smeshen;  
     Vector3 scaleRight;
@@ -44,6 +50,7 @@ public class Player : MonoBehaviour
     float Yv=0;
     Animator _cAnimator;
     float Ypred;
+    
 
     public AudioSource _aS;
     public AudioClip[] _amClip;
@@ -59,13 +66,13 @@ public class Player : MonoBehaviour
     public GameObject prefabBomba;
     private void OnGUI()
     {
-        _aS = GetComponent<AudioSource>();
-        Vector3 vect = Camera.main.WorldToScreenPoint(transform.position);
-        Rect liveRect = new Rect(vect.x + 10, Screen.height - vect.y - 30, 20, 20);
-        GUI.Box(liveRect, live.ToString());
+        
+        //Vector3 vect = Camera.main.WorldToScreenPoint(transform.position);
+        //Rect liveRect = new Rect(vect.x + 10, Screen.height - vect.y - 30, 20, 20);
+        //GUI.Box(liveRect, live.ToString());
         #region Отладка
-        GUILayout.Label("Velocity X="+Xv.ToString()+" Y="+ Yv.ToString());
-        GUILayout.Toggle(ground,"ground");    
+        //GUILayout.Label("Velocity X="+Xv.ToString()+" Y="+ Yv.ToString());
+        //GUILayout.Toggle(ground,"ground");    
         #endregion
     }
     
@@ -75,7 +82,9 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-        
+       _aS = GetComponent<AudioSource>();
+        //SceneManager.LoadScene(1, LoadSceneMode.Additive);
+        //DontDestroyOnLoad(this.gameObject);
         _cAnimator = GetComponent<Animator>();
         _cRigi =  GetComponent<Rigidbody2D>();
         Stay = transform.GetChild(0).gameObject;
@@ -197,18 +206,19 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        AxisX=Input.GetAxis("Horizontal");
-       
+        #region Управление героем
+
+        AxisX = Input.GetAxis("Horizontal");
 
         if (Input.GetButton("Horizontal"))
         {
-           // Stay.SetActive(false);
-           
+            // Stay.SetActive(false);
+
             Move();
         }
-       
 
-        if(Input.GetKeyDown(KeyCode.Mouse0)  || Input.GetKeyDown(KeyCode.LeftControl)) 
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.LeftControl))
         {
             Bul();
             //print("Выстрел");
@@ -217,13 +227,55 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             RunPlayer();
-        } 
+        }
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             Instantiate(prefabBomba, transform.position, Quaternion.identity);
         }
+        #endregion
 
-        if (transform.position.y < -10 || live <= 0) SceneManager.LoadScene(0);
+        #region Потеря жизни
+        if (transform.position.y < -10 || live <= 0)
+        {
+            live = 10;
+            livs--;
+            //Поиск площадки для зарождения
+            float X1, Y1, a=1,c=1;
+            X1 = transform.position.x;
+            Y1 = -10;
+            
+            bool transformPlayer = true;
+            while (transformPlayer)
+            {
+                _rLiveNewPosit = Physics2D.RaycastAll(new Vector2(X1, Y1), new Vector2(0, 100));
+                foreach (RaycastHit2D r in _rLiveNewPosit)
+                {
+                
+                if (r.transform.tag == "Platform")
+                    {
+                      
+                        transform.position = new Vector3(r.transform.position.x, r.transform.position.y + 5, r.transform.position.z);
+                        //transformPlayer = false;
+                        return;
+                        //break;
+                        
+                    }
+                }
+                //Вращение луча для обнаружения платформы
+                X1 = X1 + a * c;
+                a = a + 0.5f;
+                c = c * -1;
+            }
+         }
+        if (livs <= 0)
+        {
+            SceneManager.LoadScene(0);
+        }
+        #endregion
+
+
+        #region Анимация персонажа
+
         if (ground && AxisX==0)//Если на земле стоим
         {
             _cAnimator.SetBool("Run", false);
@@ -247,6 +299,7 @@ public class Player : MonoBehaviour
             _cAnimator.SetBool("jumpUp", false);
 
         }
+        #endregion
         //if(Ypred == transform.position.y)
         //{
         //    print("сошлись");

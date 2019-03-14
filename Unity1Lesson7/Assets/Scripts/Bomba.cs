@@ -48,15 +48,22 @@ public class Bomba : MonoBehaviour
                 if (o.tag == "Player")
                 {
                     o.GetComponent<Player>().live -= (int)Mathf.Round(5 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2)));
-                    AudioSource a = o.GetComponent<Player>()._aS;
-                    a.clip = o.GetComponent<Player>()._amClip[0];
-                    a.Play();
+                    if (o.GetComponent<Player>()._aS.clip != null)
+                    {
+                        AudioSource a = o.GetComponent<Player>()._aS;
+                        a.clip = o.GetComponent<Player>()._amClip[0];
+                        a.Play();
+                    }
                 }
                 else if (o.tag == "Enimes")
                 {
                     o.GetComponent<Enime>().live -= (int)Mathf.Round(5 - Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2)));
-                    if(!o.GetComponent<Enime>()._aS.isPlaying)
-                    o.GetComponent<Enime>()._aS.Play();
+                    
+                    if (o.GetComponent<AudioSource>()!=null)      
+                        if (o.GetComponent<Enime>()._aS.clip != null)
+                            if (!o.GetComponent<Enime>()._aS.isPlaying)
+                                o.GetComponent<Enime>()._aS.Play();
+                    
                 }
 
                 

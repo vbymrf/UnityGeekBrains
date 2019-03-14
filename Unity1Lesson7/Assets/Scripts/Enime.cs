@@ -41,13 +41,14 @@ public class Enime : MonoBehaviour
         _aS = GetComponent<AudioSource>();
       _rigibody = GetComponent<Rigidbody2D>();
         impulse = 0;
-        seeUgl = new Vector3(0, -1, 0);
+        
         nol = new Vector3(0, 0, 0);
 
         waitBullet = new WaitForSeconds(timeWaitBullet);
 
         Player = GameObject.FindGameObjectWithTag("Player");
 
+        seeUgl = new Vector3(0, -1, 0);
         if (right)
         {
             
@@ -78,7 +79,7 @@ public class Enime : MonoBehaviour
             if (Visible)
             {
                 vidim = Physics2D.RaycastAll(transform.position, step+seeUgl, distanceSee, seeMask);
-                Debug.DrawRay(transform.position, step* distanceSee + seeUgl* distanceSee, Color.red);
+                //Debug.DrawRay(transform.position, step* distanceSee + seeUgl* distanceSee, Color.red);
                 //foreach(RaycastHit2D vid in vidim) Debug.Log(vid.collider.name);
                 if (Patrol)
                 {
