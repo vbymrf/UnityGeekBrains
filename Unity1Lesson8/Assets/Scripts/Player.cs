@@ -50,6 +50,9 @@ public class Player : MonoBehaviour
     float Yv=0;
     Animator _cAnimator;
     float Ypred;
+
+
+    public GameObject _gMenu;
     
 
     public AudioSource _aS;
@@ -82,6 +85,8 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
+        _gMenu = GameObject.Find("Menu");
+
        _aS = GetComponent<AudioSource>();
         //SceneManager.LoadScene(1, LoadSceneMode.Additive);
         //DontDestroyOnLoad(this.gameObject);
@@ -232,6 +237,12 @@ public class Player : MonoBehaviour
         {
             Instantiate(prefabBomba, transform.position, Quaternion.identity);
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_gMenu != null)
+            _gMenu.GetComponent<Menu>().StartMenu();
+        }
         #endregion
 
         #region Потеря жизни
@@ -269,7 +280,7 @@ public class Player : MonoBehaviour
          }
         if (livs <= 0)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
         #endregion
 

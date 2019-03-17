@@ -7,6 +7,7 @@ TagManager:
   - Platform
   - Enimes
   - livs
+  - Text
   layers:
   - Default
   - TransparentFX

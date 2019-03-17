@@ -200,8 +200,8 @@ GameObject:
   - component: {fileID: 50215896}
   - component: {fileID: 50215895}
   m_Layer: 5
-  m_Name: Label
-  m_TagString: Untagged
+  m_Name: tEnglish
+  m_TagString: Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -279,8 +279,8 @@ GameObject:
   - component: {fileID: 132343463}
   - component: {fileID: 132343462}
   m_Layer: 5
-  m_Name: Label
-  m_TagString: Untagged
+  m_Name: tRussian
+  m_TagString: Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -445,7 +445,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!114 &148602473
 MonoBehaviour:
@@ -583,7 +583,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 355929180}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1310676730}
+        m_MethodName: StartMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &355929180
@@ -718,8 +729,8 @@ GameObject:
   - component: {fileID: 641112288}
   - component: {fileID: 641112287}
   m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
+  m_Name: tNamePlayer
+  m_TagString: Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -928,7 +939,7 @@ GameObject:
   - component: {fileID: 723377490}
   - component: {fileID: 723377489}
   m_Layer: 5
-  m_Name: Languade
+  m_Name: tLanguage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1086,7 +1097,7 @@ GameObject:
   - component: {fileID: 803430718}
   - component: {fileID: 803430721}
   m_Layer: 5
-  m_Name: Hello
+  m_Name: tHello
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1200,8 +1211,8 @@ GameObject:
   - component: {fileID: 935877150}
   - component: {fileID: 935877149}
   m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
+  m_Name: tStart
+  m_TagString: Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1433,7 +1444,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &1047720461
 MonoBehaviour:
@@ -1448,7 +1459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.59607846, g: 0.5882353, b: 0.43529412, a: 1}
+  m_Color: {r: 0.8642187, g: 1, b: 0.759434, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2000,8 +2011,8 @@ GameObject:
   - component: {fileID: 1231552974}
   - component: {fileID: 1231552973}
   m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
+  m_Name: tBack
+  m_TagString: Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2098,8 +2109,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7c9f4d7f173e724b87909f5b5a6a7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cStartMenu: {fileID: 0}
-  _cEditMenu: {fileID: 0}
+  _giStartMenu: {fileID: 0}
+  _giEditMenu: {fileID: 0}
+  _giHello: {fileID: 0}
+  _giStart: {fileID: 0}
+  _giBackOnGame: {fileID: 0}
+  _giSetting: {fileID: 0}
+  _giExit: {fileID: 0}
+  _giBack: {fileID: 0}
+  _giLanguage: {fileID: 0}
+  _giNamePlayer: {fileID: 0}
+  _giEnglish: {fileID: 0}
+  _giRussian: {fileID: 0}
+  _giInputField: {fileID: 0}
+  timeScale: 0
+  fixedDeltaTime: 0
 --- !u!224 &1310676731
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2215,7 +2239,18 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1310676730}
+        m_MethodName: EditName
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.InputField+OnChangeEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
@@ -2418,7 +2453,7 @@ GameObject:
   - component: {fileID: 1515362396}
   - component: {fileID: 1515362395}
   m_Layer: 5
-  m_Name: Text
+  m_Name: tExit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2586,7 +2621,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1641646388}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1310676730}
+        m_MethodName: Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1641646388
@@ -2706,10 +2752,21 @@ MonoBehaviour:
   m_Group: {fileID: 1122974618}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1310676730}
+        m_MethodName: RussianCheckBox
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &1771582563
 GameObject:
   m_ObjectHideFlags: 0
@@ -2790,10 +2847,21 @@ MonoBehaviour:
   m_Group: {fileID: 1122974618}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1310676730}
+        m_MethodName: EnglishCheckBox
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!1 &1791235570
 GameObject:
   m_ObjectHideFlags: 0
@@ -2806,7 +2874,7 @@ GameObject:
   - component: {fileID: 1791235573}
   - component: {fileID: 1791235572}
   m_Layer: 5
-  m_Name: Text
+  m_Name: tSetting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2885,8 +2953,8 @@ GameObject:
   - component: {fileID: 1880913500}
   - component: {fileID: 1880913499}
   m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
+  m_Name: tBackOnGame
+  m_TagString: Text
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3051,7 +3119,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1943478418}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1310676730}
+        m_MethodName: EditMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1943478418
@@ -3190,7 +3269,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1986881886}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1310676730}
+        m_MethodName: BackOnGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1986881886
@@ -3330,12 +3420,12 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11500000, guid: c7c9f4d7f173e724b87909f5b5a6a7cb, type: 3}
-        m_MethodName: 
+      - m_Target: {fileID: 1310676730}
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

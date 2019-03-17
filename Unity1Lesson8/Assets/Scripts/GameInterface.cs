@@ -11,6 +11,8 @@ public class GameInterface : MonoBehaviour
 
     void Start()
     {
+        
+       
         _cPlayer = FindObjectOfType<Player>();
         _cSlider = GetComponentInChildren<Slider>();
         _cSlider.value = _cPlayer.live;
